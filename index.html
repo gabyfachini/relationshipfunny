@@ -16,18 +16,17 @@ body {
     align-items: center;
     flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #eacbd1, #f1e8ec);
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
     overflow: hidden;
     text-align: center;
     padding: 20px;
     transition: 0.3s;
 }
 
-h1 { font-size: 1.6rem; margin-bottom: 20px; }
-
-.counter {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+h1 { 
+    font-size: 1.7rem; 
+    margin-bottom: 30px;
+    color: #7a1c2e;
 }
 
 .container {
@@ -43,50 +42,56 @@ h1 { font-size: 1.6rem; margin-bottom: 20px; }
     height: 200px;
 }
 
+button {
+    padding: 14px 22px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
 #yesBtn {
     position: absolute;
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #d92323;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
     color: white;
+}
+
+#yesBtn:hover {
+    transform: translateX(-50%) scale(1.05);
 }
 
 #noBtn {
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: #312b31;
+    background: #444;
     color: white;
-}
-
-.hacker {
-    position: fixed;
-    inset: 0;
-    background: black;
-    color: #00ff00;
-    font-family: monospace;
-    padding: 20px;
-    display: none;
-    z-index: 999;
 }
 
 .resultScreen {
     position: fixed;
     inset: 0;
-    background: white;
+    background: linear-gradient(135deg, #fff1f5, #ffe3ec);
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     animation: fadeIn 1s ease forwards;
+    text-align: center;
+    padding: 20px;
 }
 
 .resultScreen img {
     width: 250px;
     border-radius: 20px;
     margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 @keyframes fadeIn {
@@ -122,7 +127,6 @@ h1 { font-size: 1.6rem; margin-bottom: 20px; }
 <body>
 
 <h1 id="question">Quando você vai assumir que eu sou o amor da sua vida?</h1>
-<div class="counter">Tentativas de rejeição: <span id="count">0</span></div>
 
 <div class="container">
     <div class="buttons-area">
@@ -131,8 +135,6 @@ h1 { font-size: 1.6rem; margin-bottom: 20px; }
     </div>
 </div>
 
-<div class="hacker" id="hacker"></div>
-
 <div class="resultScreen" id="result">
     <img src="foto.png">
     <h2>💖 Oficialmente o amor da sua vida 💖</h2>
@@ -140,28 +142,24 @@ h1 { font-size: 1.6rem; margin-bottom: 20px; }
 </div>
 
 <audio id="romanticMusic" loop>
-    <source src="maksym_dudchyk-lost-in-love-instrumental-background-music-for-video-full-version-490031.mp3" type="audio/mpeg">
+    <source src="sua-musica.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const hacker = document.getElementById("hacker");
 const result = document.getElementById("result");
 const music = document.getElementById("romanticMusic");
-const countEl = document.getElementById("count");
-const question = document.getElementById("question");
 
-let count = 0;
 let yesScale = 1;
 let noScale = 1;
 
 const noTexts = [
     "Tem certeza?",
-    "Resposta inválida 😡",
-    "Sistema detectou mentira",
-    "Você sabe que me ama",
-    "Última chance..."
+    "Olha de novo 👀",
+    "Resposta suspeita...",
+    "Você sabe que me ama 😌",
+    "Última chance 😏"
 ];
 
 function errorBeep() {
@@ -177,34 +175,26 @@ function errorBeep() {
     osc.stop(ctx.currentTime + 0.2);
 }
 
-function hackerMode() {
-    hacker.style.display = "block";
-    hacker.innerHTML = "Detectando rejeição...<br>Acesso negado 🚫<br>Rejeição não permitida.";
-    setTimeout(() => hacker.style.display = "none", 1500);
-}
+let count = 0;
 
 noBtn.addEventListener("click", () => {
     count++;
-    countEl.textContent = count;
 
     errorBeep();
 
     document.body.classList.add("shake");
     setTimeout(() => document.body.classList.remove("shake"), 300);
 
-    hackerMode();
-
     noBtn.textContent = noTexts[count % noTexts.length];
 
     yesScale += 0.15;
-    yesBtn.style.transform = `scale(${yesScale})`;
+    yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
 
-    noScale -= 0.1;
-    if (noScale > 0.3)
+    noScale -= 0.08;
+    if (noScale > 0.4)
         noBtn.style.transform = `scale(${noScale})`;
 
     const area = document.querySelector(".buttons-area");
-
     const maxX = area.clientWidth - noBtn.offsetWidth;
     const maxY = area.clientHeight - noBtn.offsetHeight;
 
