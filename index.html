@@ -3,173 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relationship Funny</title>
+<title>Modo Perfeito 💘</title>
 
 <style>
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        background: linear-gradient(135deg, #eacbd1, #f1e8ec);
-        overflow: hidden;
-        text-align: center;
-        padding: 20px;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #eacbd1, #f1e8ec);
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    transition: 0.3s;
+}
 
-    h1 {
-        font-size: 1.8rem;
-        color: rgb(17, 15, 15);
-        margin-bottom: 40px;
-    }
+h1 { font-size: 1.6rem; margin-bottom: 20px; }
 
-    .container {
-        position: relative;
-        width: 100%;
-        max-width: 350px;
-        height: 300px;
-    }
+.counter {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
 
-    button {
-        position: absolute;
-        padding: 14px 24px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: bold;
-    }
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    height: 250px;
+}
 
-    #yesBtn {
-        background-color: #d92323;
-        color: white;
-        left: 20%;
-        bottom: 20px;
-    }
+button {
+    position: absolute;
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
 
-    #noBtn {
-        background-color: #312b31;
-        color: white;
-        right: 20%;
-        bottom: 20px;
-    }
+#yesBtn {
+    background-color: #d92323;
+    color: white;
+    left: 20%;
+    bottom: 20px;
+}
 
-    .confetti {
-        position: fixed;
-        width: 8px;
-        height: 8px;
-        top: -10px;
-        animation: fall linear forwards;
-    }
+#noBtn {
+    background-color: #312b31;
+    color: white;
+    right: 20%;
+    bottom: 20px;
+}
 
-    @keyframes fall {
-        to {
-            transform: translateY(100vh) rotate(720deg);
-        }
-    }
+.hacker {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    padding: 20px;
+    display: none;
+    z-index: 999;
+}
+
+.resultScreen {
+    position: fixed;
+    inset: 0;
+    background: white;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 1s ease forwards;
+}
+
+.resultScreen img {
+    width: 250px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.shake {
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    0% { transform: translate(2px, 2px); }
+    25% { transform: translate(-2px, -2px); }
+    50% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, 2px); }
+    100% { transform: translate(0, 0); }
+}
+
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    top: -10px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(720deg); }
+}
 </style>
 </head>
 <body>
 
-<h1>Quando você vai assumir que eu sou o amor da sua vida?</h1>
+<h1 id="question">Quando você vai assumir que eu sou o amor da sua vida?</h1>
+<div class="counter">Tentativas de rejeição: <span id="count">0</span></div>
 
 <div class="container">
-    <button id="yesBtn">Assumo todos os dias, meu amor</button>
+    <button id="yesBtn">Assumo todos os dias ❤️</button>
     <button id="noBtn">Nunca</button>
 </div>
 
-<!-- 🎵 Música romântica local -->
+<div class="hacker" id="hacker"></div>
+
+<div class="resultScreen" id="result">
+    <img src="foto.png">
+    <h2>💖 Oficialmente o amor da sua vida 💖</h2>
+    <p>Eu sabia que você não resistiria 😏</p>
+</div>
+
 <audio id="romanticMusic" loop>
     <source src="maksym_dudchyk-lost-in-love-instrumental-background-music-for-video-full-version-490031.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 💻 Som Windows XP error -->
-<audio id="errorXP">
-    <source src="windows-error.mp3" type="audio/mpeg">
-</audio>
-
-<!-- 🎮 Som videogame acesso negado -->
-<audio id="accessDenied">
-    <source src="acesso-negado.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const hacker = document.getElementById("hacker");
+const result = document.getElementById("result");
+const music = document.getElementById("romanticMusic");
+const countEl = document.getElementById("count");
+const question = document.getElementById("question");
 
-    const music = document.getElementById("romanticMusic");
-    const errorXP = document.getElementById("errorXP");
-    const accessDenied = document.getElementById("accessDenied");
+let count = 0;
+let yesScale = 1;
+let noScale = 1;
 
-    let yesScale = 1;
-    let noScale = 1;
+const noTexts = [
+    "Tem certeza?",
+    "Resposta inválida 😡",
+    "Sistema detectou mentira",
+    "Você sabe que me ama",
+    "Última chance..."
+];
 
-    function playMusic() {
-        music.volume = 0.6;
-        music.play().catch(e => console.log(e));
+function errorBeep() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.value = 200;
+    gain.gain.value = 0.3;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.2);
+}
+
+function hackerMode() {
+    hacker.style.display = "block";
+    hacker.innerHTML = "Detectando rejeição...<br>Acesso negado 🚫<br>Rejeição não permitida.";
+    setTimeout(() => hacker.style.display = "none", 1500);
+}
+
+noBtn.addEventListener("click", () => {
+    count++;
+    countEl.textContent = count;
+
+    errorBeep();
+
+    document.body.classList.add("shake");
+    setTimeout(() => document.body.classList.remove("shake"), 300);
+
+    hackerMode();
+
+    noBtn.textContent = noTexts[count % noTexts.length];
+
+    yesScale += 0.15;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    noScale -= 0.1;
+    if (noScale > 0.3)
+        noBtn.style.transform = `scale(${noScale})`;
+
+    const maxX = container.clientWidth - noBtn.offsetWidth;
+    const maxY = container.clientHeight - noBtn.offsetHeight;
+
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+});
+
+yesBtn.addEventListener("click", () => {
+    music.volume = 0.6;
+    music.play().catch(()=>{});
+    lançarConfete();
+    setTimeout(() => result.style.display = "flex", 1000);
+});
+
+function lançarConfete() {
+    for (let i = 0; i < 150; i++) {
+        const c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.animationDuration = (Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
     }
-
-    noBtn.addEventListener("click", () => {
-
-        // 🔊 Toca sons engraçados alternando
-        errorXP.currentTime = 0;
-        accessDenied.currentTime = 0;
-
-        if (Math.random() > 0.5) {
-            errorXP.play();
-        } else {
-            accessDenied.play();
-        }
-
-        // Cresce botão SIM
-        yesScale += 0.15;
-        yesBtn.style.transform = `scale(${yesScale})`;
-
-        // Diminui botão NÃO
-        noScale -= 0.1;
-        if (noScale > 0.3) {
-            noBtn.style.transform = `scale(${noScale})`;
-        }
-
-        // Move botão NÃO
-        const maxX = window.innerWidth - noBtn.offsetWidth;
-        const maxY = window.innerHeight - noBtn.offsetHeight;
-
-        noBtn.style.left = Math.random() * maxX + "px";
-        noBtn.style.top = Math.random() * maxY + "px";
-    });
-
-    yesBtn.addEventListener("click", () => {
-        playMusic();
-        lançarConfete();
-    });
-
-    function lançarConfete() {
-        for (let i = 0; i < 120; i++) {
-            const confetti = document.createElement("div");
-            confetti.classList.add("confetti");
-
-            confetti.style.left = Math.random() * window.innerWidth + "px";
-            confetti.style.backgroundColor =
-                `hsl(${Math.random() * 360}, 100%, 50%)`;
-            confetti.style.animationDuration =
-                (Math.random() * 2 + 2) + "s";
-
-            document.body.appendChild(confetti);
-
-            setTimeout(() => confetti.remove(), 4000);
-        }
-
-        setTimeout(() => {
-            alert("💖 Escolheu a melhor mulher pra sua vida 💖");
-        }, 500);
-    }
+}
 </script>
 
 </body>
