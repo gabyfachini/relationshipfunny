@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modo Perfeito 💘</title>
+<title>Modo Amor 💜</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -16,17 +16,18 @@ body {
     align-items: center;
     flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    background: radial-gradient(circle at top, #1a001f, #000000 70%);
     overflow: hidden;
     text-align: center;
     padding: 20px;
-    transition: 0.3s;
+    color: #f5e6ff;
 }
 
 h1 { 
-    font-size: 1.7rem; 
+    font-size: 1.8rem; 
     margin-bottom: 30px;
-    color: #7a1c2e;
+    color: #d8b4ff;
+    text-shadow: 0 0 15px rgba(216,180,255,0.4);
 }
 
 .container {
@@ -43,13 +44,13 @@ h1 {
 }
 
 button {
-    padding: 14px 22px;
-    border-radius: 30px;
+    padding: 14px 24px;
+    border-radius: 40px;
     border: none;
     font-size: 1rem;
     cursor: pointer;
     transition: 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    font-weight: 600;
 }
 
 #yesBtn {
@@ -57,26 +58,27 @@ button {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    background: linear-gradient(45deg, #7b2ff7, #f107a3);
     color: white;
+    box-shadow: 0 0 20px rgba(241,7,163,0.6);
 }
 
 #yesBtn:hover {
-    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 0 30px rgba(241,7,163,1);
 }
 
 #noBtn {
     position: absolute;
     top: 20px;
     left: 20px;
-    background: #444;
-    color: white;
+    background: #2a2a2a;
+    color: #ccc;
 }
 
 .resultScreen {
     position: fixed;
     inset: 0;
-    background: linear-gradient(135deg, #fff1f5, #ffe3ec);
+    background: radial-gradient(circle at center, #120018, #000);
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -88,10 +90,15 @@ button {
 }
 
 .resultScreen img {
-    width: 250px;
+    width: 260px;
     border-radius: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 0 30px rgba(241,7,163,0.6);
+}
+
+.resultScreen h2 {
+    color: #ff8dfd;
+    text-shadow: 0 0 20px rgba(255,141,253,0.6);
 }
 
 @keyframes fadeIn {
@@ -126,19 +133,19 @@ button {
 </head>
 <body>
 
-<h1 id="question">Quando você vai assumir que eu sou o amor da sua vida?</h1>
+<h1>Quando você vai assumir que eu sou o amor da sua vida?</h1>
 
 <div class="container">
     <div class="buttons-area">
-        <button id="yesBtn">Assumo todos os dias ❤️</button>
+        <button id="yesBtn">Assumo todos os dias 💘</button>
         <button id="noBtn">Nunca</button>
     </div>
 </div>
 
 <div class="resultScreen" id="result">
     <img src="foto.png">
-    <h2>💖 Oficialmente o amor da sua vida 💖</h2>
-    <p>Eu sabia que você não resistiria 😏</p>
+    <h2>💘 Oficialmente meu amor 💘</h2>
+    <p>Eu sabia que você não resistiria 😏✨</p>
 </div>
 
 <audio id="romanticMusic" loop>
@@ -153,13 +160,14 @@ const music = document.getElementById("romanticMusic");
 
 let yesScale = 1;
 let noScale = 1;
+let count = 0;
 
 const noTexts = [
     "Tem certeza?",
-    "Olha de novo 👀",
-    "Resposta suspeita...",
-    "Você sabe que me ama 😌",
-    "Última chance 😏"
+    "Resposta inválida 😌",
+    "Sistema diz que você mente",
+    "Você me ama sim",
+    "Última chance..."
 ];
 
 function errorBeep() {
@@ -167,15 +175,13 @@ function errorBeep() {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = "square";
-    osc.frequency.value = 200;
+    osc.frequency.value = 180;
     gain.gain.value = 0.3;
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.start();
     osc.stop(ctx.currentTime + 0.2);
 }
-
-let count = 0;
 
 noBtn.addEventListener("click", () => {
     count++;
@@ -214,7 +220,7 @@ function lançarConfete() {
         const c = document.createElement("div");
         c.classList.add("confetti");
         c.style.left = Math.random() * window.innerWidth + "px";
-        c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.backgroundColor = `hsl(${Math.random()*360},100%,60%)`;
         c.style.animationDuration = (Math.random()*2+2)+"s";
         document.body.appendChild(c);
         setTimeout(() => c.remove(), 4000);
