@@ -84,34 +84,60 @@
     <button id="noBtn">Nunca</button>
 </div>
 
-<audio id="romanticMusic" preload="auto" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c8c5fdf67.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
+<!-- 🎵 Música romântica local -->
+<audio id="romanticMusic" loop>
+    <source src="maksym_dudchyk-lost-in-love-instrumental-background-music-for-video-full-version-490031.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💻 Som Windows XP error -->
+<audio id="errorXP">
+    <source src="windows-error.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎮 Som videogame acesso negado -->
+<audio id="accessDenied">
+    <source src="acesso-negado.mp3" type="audio/mpeg">
 </audio>
 
 <script>
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
+
     const music = document.getElementById("romanticMusic");
+    const errorXP = document.getElementById("errorXP");
+    const accessDenied = document.getElementById("accessDenied");
 
     let yesScale = 1;
     let noScale = 1;
 
     function playMusic() {
-        music.volume = 0.7;
-        music.play().catch(error => {
-            console.log("Erro ao tocar música:", error);
-        });
+        music.volume = 0.6;
+        music.play().catch(e => console.log(e));
     }
 
     noBtn.addEventListener("click", () => {
+
+        // 🔊 Toca sons engraçados alternando
+        errorXP.currentTime = 0;
+        accessDenied.currentTime = 0;
+
+        if (Math.random() > 0.5) {
+            errorXP.play();
+        } else {
+            accessDenied.play();
+        }
+
+        // Cresce botão SIM
         yesScale += 0.15;
         yesBtn.style.transform = `scale(${yesScale})`;
 
+        // Diminui botão NÃO
         noScale -= 0.1;
         if (noScale > 0.3) {
             noBtn.style.transform = `scale(${noScale})`;
         }
 
+        // Move botão NÃO
         const maxX = window.innerWidth - noBtn.offsetWidth;
         const maxY = window.innerHeight - noBtn.offsetHeight;
 
@@ -120,7 +146,7 @@
     });
 
     yesBtn.addEventListener("click", () => {
-        playMusic(); 
+        playMusic();
         lançarConfete();
     });
 
