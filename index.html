@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quer namorar comigo?</title>
+<title>Relationship Funny</title>
 
 <style>
     * { box-sizing: border-box; }
@@ -16,7 +16,7 @@
         align-items: center;
         flex-direction: column;
         font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        background: linear-gradient(135deg, #eacbd1, #f1e8ec);
         overflow: hidden;
         text-align: center;
         padding: 20px;
@@ -24,7 +24,7 @@
 
     h1 {
         font-size: 1.8rem;
-        color: white;
+        color: rgb(17, 15, 15);
         margin-bottom: 40px;
     }
 
@@ -47,14 +47,14 @@
     }
 
     #yesBtn {
-        background-color: #22c55e;
+        background-color: #d92323;
         color: white;
         left: 20%;
         bottom: 20px;
     }
 
     #noBtn {
-        background-color: #ef4444;
+        background-color: #312b31;
         color: white;
         right: 20%;
         bottom: 20px;
@@ -77,15 +77,14 @@
 </head>
 <body>
 
-<h1>💖 Quer namorar comigo? 💖</h1>
+<h1>Quando você vai assumir que eu sou o amor da sua vida?</h1>
 
 <div class="container">
-    <button id="yesBtn">Sim 💍</button>
-    <button id="noBtn">Não 😢</button>
+    <button id="yesBtn">Assumo todos os dias, meu amor</button>
+    <button id="noBtn">Nunca</button>
 </div>
 
-<!-- Música -->
-<audio id="romanticMusic" loop>
+<audio id="romanticMusic" preload="auto" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c8c5fdf67.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
 </audio>
 
@@ -96,22 +95,15 @@
 
     let yesScale = 1;
     let noScale = 1;
-    let musicStarted = false;
 
-    function startMusic() {
-        if (!musicStarted) {
-            music.play();
-            music.volume = 0.6;
-            musicStarted = true;
-        }
+    function playMusic() {
+        music.volume = 0.7;
+        music.play().catch(error => {
+            console.log("Erro ao tocar música:", error);
+        });
     }
 
-    // Inicia música ao primeiro toque na tela
-    document.addEventListener("click", startMusic);
-
     noBtn.addEventListener("click", () => {
-        startMusic();
-
         yesScale += 0.15;
         yesBtn.style.transform = `scale(${yesScale})`;
 
@@ -123,15 +115,12 @@
         const maxX = window.innerWidth - noBtn.offsetWidth;
         const maxY = window.innerHeight - noBtn.offsetHeight;
 
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * (maxY - 100);
-
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
     });
 
     yesBtn.addEventListener("click", () => {
-        startMusic();
+        playMusic(); 
         lançarConfete();
     });
 
@@ -148,13 +137,11 @@
 
             document.body.appendChild(confetti);
 
-            setTimeout(() => {
-                confetti.remove();
-            }, 4000);
+            setTimeout(() => confetti.remove(), 4000);
         }
 
         setTimeout(() => {
-            alert("💖 Agora é oficial 😍💍");
+            alert("💖 Escolheu a melhor mulher pra sua vida 💖");
         }, 500);
     }
 </script>
