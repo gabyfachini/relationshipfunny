@@ -4,148 +4,325 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Modo Amor 💜</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+:root {
+    --rose: #ff4d8d;
+    --rose-soft: #ff85ad;
+    --lilac: #c77dff;
+    --lilac-dark: #7b2ff7;
+    --cream: #fff0f7;
+    --dark: #0d0010;
+    --card-bg: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: radial-gradient(circle at top, #1a001f, #000000 70%);
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
     overflow: hidden;
-    text-align: center;
-    padding: 20px;
+    padding: 24px;
     color: #f5e6ff;
 }
 
-h1 { 
-    font-size: 1.8rem; 
-    margin-bottom: 30px;
-    color: #d8b4ff;
-    text-shadow: 0 0 15px rgba(216,180,255,0.4);
+/* Background layers */
+.bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
 }
 
-.container {
+.bg-layer::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(199,125,255,0.18) 0%, transparent 70%);
+    top: -150px;
+    left: -150px;
+    animation: drift 12s ease-in-out infinite alternate;
+}
+
+.bg-layer::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,77,141,0.14) 0%, transparent 70%);
+    bottom: -120px;
+    right: -120px;
+    animation: drift 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, 30px) scale(1.08); }
+}
+
+/* Card */
+.card {
     position: relative;
+    z-index: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 48px 40px 40px;
+    max-width: 400px;
     width: 100%;
-    max-width: 350px;
-    height: 250px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        0 0 0 1px rgba(199,125,255,0.1),
+        0 30px 80px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    text-align: center;
+    animation: cardIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.icon-top {
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    display: block;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #f0d6ff;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: rgba(240,214,255,0.4);
+    margin-bottom: 36px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Buttons area */
 .buttons-area {
     position: relative;
+    height: 180px;
     width: 100%;
-    height: 200px;
-}
-
-button {
-    padding: 14px 24px;
-    border-radius: 40px;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s ease;
-    font-weight: 600;
 }
 
 #yesBtn {
     position: absolute;
-    bottom: 10px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(45deg, #7b2ff7, #f107a3);
+    padding: 16px 36px;
+    border-radius: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    background: linear-gradient(135deg, var(--lilac-dark), var(--rose));
     color: white;
-    box-shadow: 0 0 20px rgba(241,7,163,0.6);
+    box-shadow:
+        0 0 0 0 rgba(255,77,141,0),
+        0 8px 30px rgba(255,77,141,0.45);
+    transition: box-shadow 0.3s, transform 0.2s;
+    white-space: nowrap;
 }
 
 #yesBtn:hover {
-    box-shadow: 0 0 30px rgba(241,7,163,1);
+    box-shadow:
+        0 0 0 6px rgba(255,77,141,0.12),
+        0 12px 40px rgba(255,77,141,0.65);
+    transform: translateX(-50%) translateY(-2px) !important;
+}
+
+#yesBtn:active {
+    transform: translateX(-50%) scale(0.97) !important;
 }
 
 #noBtn {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    background: #2a2a2a;
-    color: #ccc;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.45);
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
 }
 
-.resultScreen {
+#noBtn:hover {
+    background: rgba(255,255,255,0.09);
+    color: rgba(255,255,255,0.65);
+}
+
+
+
+/* Result screen */
+.result-screen {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, #120018, #000);
+    background: var(--dark);
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    animation: fadeIn 1s ease forwards;
     text-align: center;
-    padding: 20px;
+    padding: 32px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
 }
 
-.resultScreen img {
-    width: 260px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 30px rgba(241,7,163,0.6);
+.result-screen.active {
+    display: flex;
 }
 
-.resultScreen h2 {
-    color: #ff8dfd;
-    text-shadow: 0 0 20px rgba(255,141,253,0.6);
+.result-screen.visible {
+    opacity: 1;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.result-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,77,141,0.25);
+    border-radius: 28px;
+    padding: 48px 40px;
+    max-width: 380px;
+    width: 100%;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 0 60px rgba(255,77,141,0.2),
+        0 30px 80px rgba(0,0,0,0.6);
+    animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
 }
 
-.shake {
-    animation: shake 0.3s;
+.result-img-wrap {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    overflow: hidden;
+    border: 3px solid rgba(255,77,141,0.5);
+    box-shadow:
+        0 0 0 6px rgba(255,77,141,0.1),
+        0 0 40px rgba(255,77,141,0.4);
 }
 
-@keyframes shake {
-    0% { transform: translate(2px, 2px); }
-    25% { transform: translate(-2px, -2px); }
-    50% { transform: translate(2px, -2px); }
-    75% { transform: translate(-2px, 2px); }
-    100% { transform: translate(0, 0); }
+.result-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
+.result-img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--lilac-dark), var(--rose));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.result-screen h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: #ffb3d1;
+    margin-bottom: 10px;
+}
+
+.result-screen p {
+    font-size: 0.95rem;
+    color: rgba(240,214,255,0.55);
+    line-height: 1.6;
+}
+
+.result-hearts {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 1.4rem;
+}
+
+/* Confetti */
 .confetti {
     position: fixed;
-    width: 8px;
-    height: 8px;
-    top: -10px;
+    width: 7px;
+    height: 7px;
+    border-radius: 1px;
+    top: -14px;
+    pointer-events: none;
     animation: fall linear forwards;
+    z-index: 9999;
 }
 
 @keyframes fall {
-    to { transform: translateY(100vh) rotate(720deg); }
+    to { transform: translateY(110vh) rotate(760deg); }
 }
+
+
 </style>
 </head>
 <body>
 
-<h1>Quando você vai assumir que eu sou o amor da sua vida?</h1>
+<div class="bg-layer"></div>
 
-<div class="container">
+<div class="card">
+    <span class="icon-top">💌</span>
+    <h1>Quando você vai assumir que eu sou o amor da sua vida?</h1>
+    <p class="subtitle">Uma pergunta muito séria</p>
+
     <div class="buttons-area">
+        <button id="noBtn">Nunca 🙄</button>
         <button id="yesBtn">Assumo todos os dias 💘</button>
-        <button id="noBtn">Nunca</button>
     </div>
 </div>
 
-<div class="resultScreen" id="result">
-    <img src="foto.png">
-    <h2>💘 Oficialmente meu amor 💘</h2>
-    <p>Eu sabia que você não resistiria 😏✨</p>
+<!-- Tela de resultado -->
+<div class="result-screen" id="result">
+    <div class="result-card">
+        <div class="result-img-wrap">
+            <!-- Troque o src por foto.png quando tiver a imagem -->
+            <div class="result-img-placeholder">🥰</div>
+            <!-- <img src="foto.png" alt="Amor"> -->
+        </div>
+        <h2>Oficialmente meu amor</h2>
+        <p>Eu sabia que você não resistiria.<br>Decisão sábia, aliás. ✨</p>
+        <div class="result-hearts">💘 💖 💗</div>
+    </div>
 </div>
 
 <audio id="romanticMusic" loop>
@@ -153,80 +330,108 @@ button {
 </audio>
 
 <script>
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const result = document.getElementById("result");
-const music = document.getElementById("romanticMusic");
+const yesBtn     = document.getElementById("yesBtn");
+const noBtn      = document.getElementById("noBtn");
+const result     = document.getElementById("result");
+const music      = document.getElementById("romanticMusic");
 
 let yesScale = 1;
-let noScale = 1;
-let count = 0;
+let noScale  = 1;
+let count    = 0;
 
 const noTexts = [
-    "Tem certeza?",
+    "Tem certeza? 🤨",
     "Resposta inválida 😌",
-    "Sistema diz que você mente",
-    "Você me ama sim",
-    "Última chance..."
+    "O sistema discorda 🖥️",
+    "Você me ama sim 🫦",
+    "Última oportunidade…",
+    "Mentira detectada 🚨",
 ];
 
-function errorBeep() {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "square";
-    osc.frequency.value = 180;
-    gain.gain.value = 0.3;
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.2);
+function playBeep() {
+    try {
+        const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = 220;
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+    } catch(e) {}
+}
+
+function randomPositionInArea(btn, area) {
+    const aW = area.clientWidth  - btn.offsetWidth;
+    const aH = area.clientHeight - btn.offsetHeight;
+    return {
+        x: Math.max(0, Math.random() * aW),
+        y: Math.max(0, Math.random() * aH)
+    };
 }
 
 noBtn.addEventListener("click", () => {
     count++;
 
-    errorBeep();
+    playBeep();
 
-    document.body.classList.add("shake");
-    setTimeout(() => document.body.classList.remove("shake"), 300);
+    // Update no button text
+    noBtn.textContent = noTexts[(count - 1) % noTexts.length];
 
-    noBtn.textContent = noTexts[count % noTexts.length];
-
-    yesScale += 0.15;
+    // Grow yes button
+    yesScale = Math.min(yesScale + 0.12, 2);
     yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
 
-    noScale -= 0.08;
-    if (noScale > 0.4)
-        noBtn.style.transform = `scale(${noScale})`;
+    // Shrink no button
+    noScale = Math.max(noScale - 0.1, 0.45);
+    noBtn.style.transform  = `scale(${noScale})`;
 
+    // Move no button around
     const area = document.querySelector(".buttons-area");
-    const maxX = area.clientWidth - noBtn.offsetWidth;
-    const maxY = area.clientHeight - noBtn.offsetHeight;
+    noBtn.style.position = "absolute";
+    const pos = randomPositionInArea(noBtn, area);
+    noBtn.style.left = pos.x + "px";
+    noBtn.style.top  = pos.y + "px";
 
-    noBtn.style.left = Math.random() * maxX + "px";
-    noBtn.style.top = Math.random() * maxY + "px";
+    // Remove default centering after first click
+    if (count === 1) {
+        noBtn.style.transform = `scale(${noScale})`;
+    }
 });
 
 yesBtn.addEventListener("click", () => {
-    music.volume = 0.6;
-    music.play().catch(()=>{});
-    lançarConfete();
-    setTimeout(() => result.style.display = "flex", 1000);
+    music.volume = 0.5;
+    music.play().catch(() => {});
+    launchConfetti();
+
+    result.classList.add("active");
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => result.classList.add("visible"));
+    });
 });
 
-function lançarConfete() {
-    for (let i = 0; i < 150; i++) {
+function launchConfetti() {
+    const colors = [
+        "#ff4d8d", "#c77dff", "#ff85ad", "#ffb347",
+        "#7b2ff7", "#f9f871", "#a8edea"
+    ];
+    for (let i = 0; i < 180; i++) {
         const c = document.createElement("div");
         c.classList.add("confetti");
-        c.style.left = Math.random() * window.innerWidth + "px";
-        c.style.backgroundColor = `hsl(${Math.random()*360},100%,60%)`;
-        c.style.animationDuration = (Math.random()*2+2)+"s";
+        c.style.left            = Math.random() * window.innerWidth + "px";
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (Math.random() * 2 + 2.2) + "s";
+        c.style.animationDelay    = (Math.random() * 0.8) + "s";
+        c.style.width  = (Math.random() * 6 + 5) + "px";
+        c.style.height = (Math.random() * 6 + 5) + "px";
+        c.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
         document.body.appendChild(c);
-        setTimeout(() => c.remove(), 4000);
+        setTimeout(() => c.remove(), 5000);
     }
 }
 </script>
-
 </body>
 </html>
